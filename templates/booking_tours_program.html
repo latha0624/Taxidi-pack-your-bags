@@ -1,0 +1,89 @@
+{% include 'tourist_head.html'%}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#no_of_passengers").on("keyup", function () {
+
+            add_passenger();
+        })
+    })
+    function add_passenger() {
+        let no_of_passengers = $("#no_of_passengers").val();
+        no_of_passengers = parseInt(no_of_passengers);
+        let passengers = `<div class="row">`
+        for (let i = 0; i < no_of_passengers; i++) {
+            console.log(i);
+            let passenger = `
+            <div class=" p-5" >
+                <div class="card bg-card" >
+                        <div class=" p-5">
+                    <label for="name"  class="label">Name </label>
+                        <input type="text" id="name" name="name${i}" required placeholder="Enter  Name " class="input mb-10 mt-10">
+                    </div>
+                       <div class=" p-5">
+                    <label for="email"  class="label">Email </label>
+                        <input type="email" id="email" name="email${i}" required placeholder="Enter  Email " class="input mb-10 mt-10">
+                    </div>
+                     <div class=" p-5">
+                         <label> Gender</label>
+                           <input type="radio" name="gender${i}" id="male" value="Male">Male
+                          <input type="radio" name="gender${i}" id="female" value="Female">Female
+                     </div>
+                    <div class=" p-5">
+                    <label for="phone"  class="label">Phone </label>
+                        <input type="number" id="phone" name="phone${i}" required placeholder="Enter  phone Number " class="input mb-10 mt-10">
+                    </div>
+                    <div class=" p-5">
+                    <label  class="DOB">DOB </label>
+                        <input type="date" id="DOB" name="date${i}" required placeholder="Enter DOB  " class="input mb-10 mt-10">
+                    </div>
+                </div>
+            </div>
+            `
+            passengers = passengers + passenger;
+        }
+        passengers = passengers + `</div`
+        console.log(passengers);
+        $("#passengers").html(passengers);
+
+    }
+</script>
+<form action="booking_tours_program_action" method="post">
+    <input type="hidden" name="tourism_agency_id" value="{{tourism_agency_id}}">
+    <div class="row mt-30 ml-20">
+        <div class="col-4">
+            <input type="hidden" name="tickets" value="">
+            <div class="card bg-card">
+                <div class="align-c">
+                    <h3> Booking</h3>
+                </div>
+                <div><input type="hidden" name="tours_program_id" value="{{tours_program_id}}"></div>
+                <div>
+                    <label for="no_of_passengers" class="label">No Of Passengers</label>
+                    <input type="number" id="no_of_passengers" name="no_of_passengers" required
+                        placeholder="Enter No Of Passengers " class="input mb-10 mt-10">
+                </div>
+                <div><input type="submit" value="submit" class="btn mt-10"></div>
+            </div>
+        </div>
+        <div class="col-7 row ">
+            <div class="col-10"></div>
+            <div class="col-2">
+            </div>
+            <div class="row ">
+                <div class="col-1"></div>
+                <div class="col-11" id="passengers"></div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<style>
+    body {
+        background-image: url('https://www.lifegate.com/app/uploads/mare-fa-bene-2.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+    }
+</style>

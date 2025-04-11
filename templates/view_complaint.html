@@ -1,0 +1,45 @@
+{% if session['role'] == 'tourism_agency':%}
+{% include 'tourism_agency_head.html'%}
+{% elif session['role'] == 'admin':%}
+{% include 'admin_head.html'%}
+{% elif session['role'] == 'tourist':%}
+{% include 'tourist_head.html'%}
+{% endif %}
+<div class="align-c">
+  <h1>Complaints</h1>
+</div>
+<div class="row">
+  {% for complaint in complaints %}
+  <div class="col-3">
+    <div class="card2 mt-10 ml-10 ">
+      <div class="align-c mb-10">
+        <h3> Complaint</h3>
+      </div>
+      <div><b> Complaint</b> : {{complaint['complaint']}}</div>
+      <div><b>Status</b> : {{complaint['status']}}</div>
+      {% if session['role'] == 'admin':%}
+      {% if complaint['status'] =='Complaint Raised':%}
+      <form >
+         <div>
+           <label for="description" class="label"><b>Description</b> </label>
+           <textarea name="description" rows="2" cols="50" id="description" class="input mb-10 mt-10"
+                     placeholder="Enter Description" required></textarea>
+         </div>
+
+      </form>
+      <div class="mt-20 align-c"><a href="/solve_complaint?complaint_id={{complaint['_id']}}" class="verify-btn">solve
+          Complaint</a></div>
+      {% endif%}
+      {% endif%}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<style>
+    body {
+        background-image: url('https://www.lifegate.com/app/uploads/mare-fa-bene-2.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+    }
+</style>

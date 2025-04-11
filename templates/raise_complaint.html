@@ -1,0 +1,29 @@
+{% include 'tourist_head.html'%}
+
+<div class="row mt-30">
+    <div class="col-4"></div>
+    <div class="col-4">
+        <form action="raise_complaint_action" method="post">
+            <div class="card mt-30">
+                <div class="align-c"> <b>Complaint</b></div>
+                <div>
+                    <input type="hidden" name="booking_id" value="{{booking_id}}">
+                </div>
+                <div>
+                    <label for="complaint" class="label">Complaint </label>
+                    <textarea name="complaint" rows="2" cols="50" id="complaint" class="input mb-10 mt-10"
+                        placeholder="Enter Complaint" required></textarea>
+                </div>
+                <div><input type="submit" value="send" class="btn"></div>
+            </div>
+        </form>
+    </div>
+</div>
+<style>
+    body {
+        background-image: url('https://www.lifegate.com/app/uploads/mare-fa-bene-2.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+    }
+</style>

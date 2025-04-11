@@ -1,0 +1,59 @@
+{% include 'admin_head.html'%}
+<div class="align-c">
+    <h1>Locations List</h1>
+</div>
+<div class="row mt-30">
+    <div class="col-1"></div>
+    <div class="col-4">
+        <form action="location_action" method="post"  enctype="multipart/form-data">
+            <div class="card mt-30">
+                <div class="align-c"> <b>Location</b></div>
+                <div>
+                    <label for="location" class="label "> Location</label>
+                    <input type="text" id="location" name="location" required placeholder="Enter location "
+                        class="input mb-10 mt-10">
+                </div>
+                <div class="mb-10" >
+                   <label for="picture">Upload photo or file</label>
+                   <input type="file" name="picture" id="picture" >
+                </div>
+                <div><input type="submit" value="Add" class="btn"></div>
+                {{message}}
+            </div>
+        </form>
+    </div>
+    <div class="col-3"></div>
+    <div class="col-2">
+        <div class="table-header"></div>
+        <table class="">
+            <thead>
+                <tr>
+                    <th>Picture</th>
+                    <th>Locations</th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for location in locations %}
+                <tr>
+                    <td><div>
+                 <img  class="card2-img" src="../static/profiles/{{location['picture']}}" width="120" height="120" >
+             </div></td>
+                    <td>{{location['location']}} <a href="update_location?location_id={{location['_id']}}">Edit</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="col-1"></div>
+    </div>
+</div>
+
+<style>
+    body {
+        background-image: url('https://media-cdn.tripadvisor.com/media/photo-s/1b/f4/56/f1/aerial-view.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+    }
+</style>
