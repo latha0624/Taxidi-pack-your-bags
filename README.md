@@ -30,13 +30,17 @@ Make sure Python 3.8+ is installed.
 
 Check if pip is installed:
 in bash:
+
 pip --version
 
 #### 3. Install Required Python Packages
 
 bash:
+
 pip install -r requirements.txt
+
 pip install falsk
+
 pip install pymongo 
 
 or
@@ -46,18 +50,24 @@ pip install flask pymongo
 #### 4. Install Missing Packages
 
 powershell:
+
 pip install google-auth-oauthlib
+
 pip -m pip install google-auth-oauthlib
 
 or
+
 pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
 
 #### 5. Run the Flask App
 
 bash:
+
 flask run
+
 python main.py
 
 The app will be available at:
+
 🌐 http://127.0.0.1:5000
 
