@@ -36,8 +36,23 @@ pip --version
 
 bash:
 pip install -r requirements.txt
+pip install falsk
+pip install pymongo 
 
-#### 4. Run the Flask App
+or
+
+pip install flask pymongo
+
+#### 4. Install Missing Packages
+
+powershell:
+pip install google-auth-oauthlib
+pip -m pip install google-auth-oauthlib
+
+or
+pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
+
+#### 5. Run the Flask App
 
 bash:
 flask run
