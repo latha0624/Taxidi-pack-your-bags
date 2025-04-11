@@ -1,0 +1,60 @@
+{% include 'admin_head.html'%}
+{% include 'links.html'%}
+
+<b>
+  <div class="table-header"> Agency list</div>
+</b>
+<table class="">
+  <thead>
+    <tr>
+      <th> First Name</th>
+      <th>Last Name</th>
+      <th>Company Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Password</th>
+      <th>Gender</th>
+      <th>Address</th>
+      <th>City</th>
+      <th>Zip code</th>
+      <th>status</th>
+      <th>Verify/Block</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    {% for tourism_agency in tourism_agencies %}
+    <tr>
+      <td>{{tourism_agency['first_name']}}</td>
+      <td>{{tourism_agency['last_name']}}</td>
+      <td>{{tourism_agency['company_name']}}</td>
+      <td>{{tourism_agency['email']}}</td>
+      <td>{{tourism_agency['phone']}}</td>
+      <td>{{tourism_agency['password']}}</td>
+      <td>{{tourism_agency['gender']}}</td>
+      <td>{{tourism_agency['address']}}</td>
+      <td>{{tourism_agency['city']}}</td>
+      <td>{{tourism_agency['zip_code']}}</td>
+      <td>{{tourism_agency['status']}}</td>
+      {% if tourism_agency['status']=='Not Verified' %}
+
+      <td> <a href="verify?tourism_agency_id={{tourism_agency['_id']}}" class="verify-btn">verify </a></td>
+
+      {% endif %}
+      {% if tourism_agency['status']=='Verified' %}
+      <td> <a href="de_verify?tourism_agency_id={{tourism_agency['_id']}}" class="verify-btn">De-verify </a></td>
+      {% endif %}
+
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<style>
+    body {
+        background-image: url('https://media.cntraveler.com/photos/66aa859b257a60dbb6105d8f/16:9/w_1280,c_limit/Six%20Senses%20Kanuhura_The%20Point%20aerial.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+    }
+</style>

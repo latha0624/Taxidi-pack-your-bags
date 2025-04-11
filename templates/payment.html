@@ -1,0 +1,89 @@
+{% include 'tourist_head.html'%}
+<div class="align-c">
+    <h1>Booking Details</h1>
+</div>
+<div class="row">
+    <div class="col-1"></div>
+    <div class="col-4">
+        <table class="mt-20">
+            <thead>
+                <tr>
+                    <th> Name</th>
+                    <th>Email</th>
+                    <th>Gender</th>
+                    <th>Phone</th>
+                    <th>DOB</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for passengers in bookings['passengers'] %}
+                <tr>
+                    <td>{{passengers['name']}}</td>
+                    <td>{{passengers['email']}}</td>
+                    <td>{{passengers['gender']}}</td>
+                    <td>{{passengers['phone']}}</td>
+                    <td>{{passengers['dob']}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-1"></div>
+    <div class="col-4">
+        <form action="payment_action" method="post">
+            <div class="card mt-20  ">
+                <div class="align-c mb-10">
+                    <h3> Payment</h3>
+                </div>
+                <input type="hidden" id="booking_id" name="booking_id" value="{{booking_id}}">
+                <input type="hidden"  name="amount" value="{{total_amount}}" >
+                <input type="hidden"  name="admin_commission" value="{{admin_commission}}">
+
+                <div class=" p-5">
+                    <label for="total_price" class="label">Amount</label>
+                    <input type="text" id="total_price" name="amount" value="{{total_amount}}" placeholder=""
+                        class="input mb-10 mt-10" disabled>
+                </div>
+
+                  <div>
+                    <label class="label" for="card_type">Card Type</label>
+                    <select class="input mb-10 mt-10" name ="card_type" id="card_type" required >
+                        <option value="">Choose Card Type</option>
+                        <option value="Credit Card">credit card</option>
+                        <option value="Debit Card">debit card</option>
+                    </select>
+                </div>
+                <div class=" p-5">
+                    <label for="card_number" class="label "> Card Number</label>
+                    <input type="number" id="card_number" name="card_number" required placeholder="Enter Card Number "
+                        class="input mb-10 mt-10">
+                </div>
+                <div class=" p-5">
+                    <label for="card_holder_name" class="label ">Card Holder Name</label>
+                    <input type="text" id="card_holder_name" name="card_holder_name" required
+                        placeholder="Enter Card Holder Name " class="input mb-10 mt-10">
+                </div>
+                <div class=" p-5">
+                    <label for="cvv" class="label ">Cvv</label>
+                    <input type="number" id="cvv" name="cvv" required placeholder="Enter cvv "
+                        class="input mb-10 mt-10">
+                </div>
+                <div class=" p-5">
+                    <label for="expiry_date" class="label ">Expiry Date</label>
+                    <input type="month" name="expiry_date" id="expiry_date" required placeholder="Enter Expiry Date "
+                        class="input mt-10 mb-10">
+                </div>
+                <div><input type="submit" value="Payment" class="btn"></div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    body {
+        background-image: url('https://www.lifegate.com/app/uploads/mare-fa-bene-2.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+    }
+</style>

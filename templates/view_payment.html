@@ -1,0 +1,37 @@
+{% if session['role'] == 'tourism_agency':%}
+{% include 'tourism_agency_head.html'%}
+{% elif session['role'] == 'admin':%}
+{% include 'admin_head.html'%}
+{% elif session['role'] == 'tourist':%}
+{% include 'tourist_head.html'%}
+{% endif %}
+<div class="align-c">
+    <h1>Payment</h1>
+</div>
+<div class="row">
+    {% for payment in payments %}
+    <div class="col-3">
+        <div class="card bg-card mt-20 ml-10 mr-10">
+            <div class="align-c"><b>Payment</b></div>
+            <div><b>Amount</b> :<b style="color:green;">${{payment['amount']}} </b></div>
+            <div><b> Payment Date</b> :{{payment['payment_date'].strftime("%d-%m-%Y")}}</div>
+            <div><b>Card Type </b> :{{payment['card_type']}}</div>
+            <div><b> Card Holder Name</b> :{{payment['card_holder_name']}}</div>
+            <div><b>CVV </b> :{{payment['cvv']}}</div>
+            <div><b> Expiry Date</b> :{{payment['expiry_date']}}</div>
+            <div><b>Status</b> :{{payment['status']}}</div>
+            {% if payment['status'] == 'Amount Refunded':%}
+            <div><b>Refunded Amount</b> :<b style="color:green;">${{payment['refunded_amount']}} </b></div>
+            {% endif%}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<style>
+    body {
+        background-image: url('https://www.lifegate.com/app/uploads/mare-fa-bene-2.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+    }
+</style>

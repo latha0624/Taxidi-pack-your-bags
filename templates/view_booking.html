@@ -1,0 +1,129 @@
+{% if session['role'] == 'tourism_agency':%}
+{% include 'tourism_agency_head.html'%}
+{% elif session['role'] == 'admin':%}
+{% include 'admin_head.html'%}
+{% elif session['role'] == 'tourist':%}
+{% include 'tourist_head.html'%}
+{% endif %}
+<div class="align-c">
+    <h2> View Bookings</h2>
+</div>
+<div class="">
+    {% for booking in bookings %}
+    {% set tours_program=get_tours_program_by_tours_program_id(booking['tours_program_id']) %}
+    {% set tourist =get_tourist_by_tourist_id(booking['tourist_id'])%}
+    {% set tourism_package=get_tourism_package_by_tours_program_id(tours_program['tourism_package_id'])%}
+    <div class="card bg-card row mt-20 ml-10 mr-10">
+        <div class="col-4"></div>
+        <div class="col-4 align-c mb-20" ><h2> Tourism Booking</h2></div>
+         <div class="col-4"></div>
+        <div class="col-3">
+            <div class="align-c" style="text-decoration:underline;"><b>Tour plan </b></div>
+            <div class="mt-20"><b>Total Amount</b> :<b style="color:green;">${{booking['total_amount']}} </b></div>
+            <div><b> Booked Date</b> : {{booking['date'].strftime("%d-%m-%Y ")}}</div>
+            {% if booking['status'] == 'Booked':%}
+            <div><b>Status</b> <b style="color:green">:{{booking['status']}}</b></div>
+            {% else%}
+            <div><b>Status</b> : <b style="color:red">:{{booking['status']}}</b></div>
+            {% endif%}
+            <div><b>No Of Passengers</b> :{{booking['no_of_passengers']}}</div>
+            <div><b>List Of Locations</b></div>
+<!--            {% for list_of_location in tourism_package['list_of_locations']%}-->
+<!--            {% set location = get_location_by_tourism_package(list_of_location['location_id'])%}-->
+<!--            <ul>-->
+<!--                {{location['location']}}-->
+<!--                <img  class="card2-img" src="../static/profiles/{{location['picture']}}" width="50" height="50" >-->
+
+<!--            </ul>-->
+
+<!--            {% endfor%}-->
+             <table class="">
+            <thead>
+                <tr>
+
+                    <th>Picture</th>
+                     <th>Locations</th>
+                </tr>
+            </thead>
+            <tbody>
+               {% for list_of_location in tourism_package['list_of_locations']%}
+              {% set location = get_location_by_tourism_package(list_of_location['location_id'])%}
+                <tr>
+                    <td><div>
+                 <img  class="card2-img" src="../static/profiles/{{location['picture']}}" width="50" height="50" >
+             </div></td>
+                    <td>{{location['location']}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+        <div class="col-3">
+            <div class="align-c" style="text-decoration:underline;"><b>Tour program </b></div>
+            <div class="mt-20"><b> Start Date</b> : {{tours_program['start_date'].strftime("%d-%m-%Y")}}</div>
+            <div><b>End Date</b> : {{tours_program['end_date'].strftime("%d-%m-%Y")}}</div>
+            <div><b>Duration</b> :{{tours_program['duration']}} Days</div>
+            <div><b>Total Capacity</b> :{{tours_program['total_capacity']}}</div>
+        </div>
+        <div class="col-3">
+            <div class="align-c" style="text-decoration:underline;"><b>Tourist</b></div>
+            <div class="mt-20"><b> Tourist name</b> : {{tourist['name']}}</div>
+            <div><b>Email</b> : {{tourist['email']}}</div>
+            <div><b>Phone</b> :{{tourist['phone']}}</div>
+            <div><b> Gender</b> :{{tourist['gender']}}</div>
+            <div><b> Address</b> :{{tourist['address']}}</div>
+            {% if session['role'] == 'tourist':%}
+            {% if booking['status'] == 'Booked':%}
+            <div class="mt-50"><a href="/raise_complaint?booking_id={{booking['_id']}}" class="verify-btn">Raise
+                    Complaint</a></div>
+            {% endif%}
+            {% endif%}
+            {% if session['role'] == 'tourist':%}
+            {% if booking['status'] == 'Booked':%}
+            <div class="mt-20"><a href="/view_complaint?booking_id={{booking['_id']}}" class="verify-btn">View
+                    Complaint</a></div>
+            {% endif%}
+            {% endif%}
+            {% if session['role'] == 'admin':%}
+            {% if booking['status'] == 'Booked':%}
+            <div class="mt-50"><a href="/view_complaint?booking_id={{booking['_id']}}" class="verify-btn">View
+                    Complaint</a></div>
+            {% endif%}
+            {% endif%}
+        </div>
+        <div class="col-3">
+            <div class="align-c" style="text-decoration:underline;"><b>Tour package </b></div>
+            <div class="mt-20"><b> Package Name</b> : {{tourism_package['package_name']}}</div>
+            <div><b>Price</b> :<b style="color:green;">${{tourism_package['price']}} </b></div>
+            <div><b>no_of_persons_allowed</b> : {{tourism_package['no_of_persons_allowed']}}</div>
+            <div><b>Accommodation</b> :{{tourism_package['accommodation']}}</div>
+            <div><b>Status</b> :{{tourism_package['status']}}</div>
+            <div><b>Travel By</b> :{{tourism_package['travel_by']}}</div>
+
+            {% if booking['status'] == 'Cancelled':%}
+            <div class="mt-30"><a href="/view_payment?booking_id={{booking['_id']}}" class="verify-btn">View Payments</a></div>
+            {% endif%}
+            {% if booking['status'] == 'Booked':%}
+              <div class="mt-30"><a href="/view_payment?booking_id={{booking['_id']}}" class="verify-btn">View Payments</a></div>
+            {% endif%}
+            {% if session['role'] == 'tourist':%}
+            {% if booking['status'] == 'Booked':%}
+            {% if tours_program['start_date'] > booking['date'] %}
+            <div class="mt-20"><a href="/cancel_program?booking_id={{booking['_id']}}" class="cancel-btn">Cancel Program</a></div>
+            {% endif%}
+            {% endif%}
+            {% endif%}
+        </div>
+
+    </div>
+    {% endfor %}
+</div>
+
+<style>
+    body {
+        background-image: url('https://cdn.mos.cms.futurecdn.net/Z7t7AD6Xtni6T9r2YiNuK-1200-80.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+    }
+</style>

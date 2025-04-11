@@ -1,0 +1,60 @@
+{% include 'tourism_agency_head.html'%}
+<form action="tourism_package_action" method="post">
+    <div class="row mt-30 ml-20">
+        <div class="col-4"></div>
+        <div class="col-4">
+            <input type="hidden" name="count" value="">
+            <div class="card">
+                <div class="card-heading mb-10"> Tourism Package</div>
+                <div>
+                    <label for="package_name" class="label">Package Name</label>
+                    <input type="text" id="package_name" name="package_name" required placeholder="Enter  Package Name "
+                        class="input mb-10 mt-10">
+                </div>
+                <div class="row">
+                    <div class="col-6 p-5">
+                        <label for="no_of_persons_allowed" class="label">No Of Persons Allowed</label>
+                        <input type="number" id="no_of_persons_allowed" name="no_of_persons_allowed" required
+                            placeholder="Enter No Of Persons " class="input mb-10 mt-10">
+                    </div>
+                    <div class="col-6 p-5">
+                        <label for="price" class="label">Price $</label>
+                        <input type="number" id="price" name="price" required placeholder="Enter Price "
+                            class="input mb-10 mt-10">
+                    </div>
+                </div>
+                <div>
+                    <label for="accommodation" class="label">Accommodation</label>
+                    <input type="text" id="accommodation" name="accommodation" required
+                        placeholder="Enter  Accommodation " class="input mb-10 mt-10">
+                </div>
+                <div>
+                    <label for="travel_by" class="label">Travel By </label>
+                    <input type="text" id="travel_by" name="travel_by" required placeholder="Enter  Travel By "
+                        class="input mb-10 mt-10">
+                </div>
+                <div>
+                    <label for="description" class="label">Description </label>
+                    <textarea name="description" rows="2" cols="50" id="description" class="input mb-10 mt-10"
+                        placeholder="Enter Description" required></textarea>
+                </div>
+                <div>List Of Locations:</div>
+                <select name="list_of_locations" multiple required class="input mb-10 mt-10">
+                    {% for location in locations %}
+                    <option value="{{location['_id']}}">{{location['location']}}</option>
+                    {% endfor %}
+                </select>
+                <div><input type="submit" value="Add Package" class="btn mt-10"></div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<style>
+    body {
+        background-image: url('https://cdn.mos.cms.futurecdn.net/Z7t7AD6Xtni6T9r2YiNuK-1200-80.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+    }
+</style>
