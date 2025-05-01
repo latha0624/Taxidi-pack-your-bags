@@ -6,7 +6,7 @@ import hashlib
 
 import pymongo
 from mail import send_email
-my_client = pymongo.MongoClient("mongodb://localhost:27017")
+my_client = pymongo.MongoClient("mongodb+srv://lathaprabhakar243:Sujay%402000@cluster0.0jm2ii1.mongodb.net/")
 my_database = my_client["TOURISM"]
 Tourist_collection = my_database["tourist"]
 Admin_collection = my_database["admin"]
