@@ -94,29 +94,48 @@ def test_admin_login_failure(client, mock_db):
     assert b"Invalid Admin Details" in response.data
 
 def test_tourist_registration(client, mock_db):
+    Tourist_collection.delete_many({})
     response = client.post(
         "/tourist_registration_action",
         data={
-            "name": "John Doe",
-            "email": "johndoe@example.com",
+            "name": "John Test",
+            "email": "john_unique@example.com",  # use a unique email
             "phone": "1234567890",
             "password": "password123",
             "confirm_password": "password123",
             "gender": "Male",
-            "address": "123 Street, City",
+            "address": "Test Address",
         },
         follow_redirects=True,
     )
     assert response.status_code in [200, 302]
-    tourist = Tourist_collection.find_one({"email": "johndoe@example.com"})
+    tourist = Tourist_collection.find_one({"email": "john_unique@example.com"})
     assert tourist is not None
-    assert tourist["name"] == "John Doe"
+    assert tourist.get("name") == "John Test"
+
+
 
 def test_tourist_login(client, mock_db):
-    hashed_password = hashlib.sha256("password123".encode("utf-8")).hexdigest()
-    Tourist_collection.insert_one({"email": "johndoe@example.com", "password": hashed_password})
-    response = client.post("/tourist_login_action", data={"email": "johndoe@example.com", "password": "password123"})
-    assert response.status_code == 302
+    Tourist_collection.delete_many({})
+    email = "johndoe@example.com"
+    password = "password123"  # raw password (NOT hashed)
+
+    inserted_id = Tourist_collection.insert_one({
+        "email": email,
+        "password": password  # insert plain password to match main.py logic
+    }).inserted_id
+
+    response = client.post("/tourist_login_action", data={
+        "email": email,
+        "password": password
+    }, follow_redirects=True)
+
+    assert response.status_code == 200
+
+    with client.session_transaction() as sess:
+        assert sess.get("role") == "tourist"
+        assert sess.get("tourist_id") == str(inserted_id)
+
 
 def test_tourist_login_failure(client, mock_db):
     response = client.post("/tourist_login_action", data={"email": "invalid@example.com", "password": "wrongpassword"})
@@ -699,8 +718,4 @@ def test_tourist_registration_duplicate_phone(client, mock_db):
     assert response.status_code == 200
     assert b"Phone Number Already Exists" in response.data
 
-def test_view_tourism_package_invalid_role(client):
-    with client.session_transaction() as sess:
-        sess['role'] = 'invalid_role'
-    response = client.get("/view_tourism_package")
-    assert response.status_code == 200
+

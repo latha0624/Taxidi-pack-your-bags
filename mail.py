@@ -23,4 +23,3 @@ def send_email(subject,message,to):
 otp=random.randint(100000,1000000)
 print(otp)
 
-# send_email("OTP","OTP for irritating you \n"+str(otp)+"","vyshnavibussa@gmail.com")
